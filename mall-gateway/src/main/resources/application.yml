@@ -1,0 +1,31 @@
+# mall-gateway/src/main/resources/application.yml
+
+server:
+  port: 8080
+
+spring:
+  application:
+    name: mall-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: mall-auth-api-route
+          uri: http://localhost:10000 
+          predicates:
+            - Path=/api/**
+            - Method=POST
+             
+        - id: mall-frontend-ui-route
+          uri: http://localhost:30000   
+          predicates:
+            - Path=/**
+            
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:8080" 
+            allowedMethods:
+              - GET
+              - POST
+            allowedHeaders: "*"
+            allowCredentials: true
